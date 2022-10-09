@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="flibs">
+      <UniqueIdentifier>{8f5ac351-4426-4ef9-977a-c6d7cdf53d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="flibs\Debug">
+      <UniqueIdentifier>{cda8dd40-122d-4241-b176-192d087b9bb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="flibs\Release">
+      <UniqueIdentifier>{4bc7ec8b-9ed6-4c2f-a2a4-165cd4416cb3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="exrexample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\drawImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\generalInterfaceExamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\generalInterfaceTiledExamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\lowLevelIoExamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\previewImageExamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\rgbaInterfaceExamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\rgbaInterfaceTiledExamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\drawImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\generalInterfaceExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\generalInterfaceTiledExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\lowLevelIoExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\namespaceAlias.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\previewImageExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\rgbaInterfaceExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\DownLoads\OpenEXR\share\doc\OpenEXR\examples\rgbaInterfaceTiledExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\..\DownLoads\openexr-main\src\lib\Iex\Debug\Iex-3_2_d.lib">
+      <Filter>flibs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\..\DownLoads\openexr-main\src\lib\OpenEXR\Debug\OpenEXR-3_2_d.lib">
+      <Filter>flibs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\..\DownLoads\openexr-main\src\lib\OpenEXR\Release\OpenEXR-3_2.lib">
+      <Filter>flibs\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\..\..\DownLoads\openexr-main\src\lib\Iex\Release\Iex-3_2.lib">
+      <Filter>flibs\Release</Filter>
+    </Library>
+  </ItemGroup>
+</Project>
