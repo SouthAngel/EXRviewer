@@ -31,6 +31,7 @@ struct ExrfContext
 	Imf::FrameBuffer frameBuffer;
 	std::map<std::string, float*> channelMapf;
 	std::map<std::string, Imf::Array2D<Imath::half>*> channelMaph;
+	std::map<std::string, Imf::PixelType> channelMapType;
 	int width = 0;
 	int height= 0;
 };
@@ -75,8 +76,8 @@ void exrf_get_res_size(point64 exrc, size_t* w, size_t* h) {
 	auto& header = _exrc->inputFile->header();
 	auto& chas = header.channels();
 	auto& dbox = header.dataWindow();
-	*w  = _exrc->width = dbox.max.x - dbox.min.x + 1;
-	*h  =_exrc->height = dbox.max.y - dbox.min.y + 1;
+	*w  = _exrc->width = dbox.max.x + 1;
+	*h  =_exrc->height = dbox.max.y + 1;
 	}
 
 int exrf_get_channel_first(point64 exrc, char* name)
@@ -87,6 +88,7 @@ int exrf_get_channel_first(point64 exrc, char* name)
 		return 1;
 	}
 	auto cname = _exrc->channelIter.name();
+	_exrc->channelMapType[cname] = _exrc->channelIter.channel().type;
 	strcpy_s(name, 256, cname);
 	_exrc->channelIter ++;
 	return 0;
@@ -99,6 +101,7 @@ int exrf_get_channel_next(point64 exrc, char* name)
 		return 1;
 	}
 	auto cname = _exrc->channelIter.name();
+	_exrc->channelMapType[cname] = _exrc->channelIter.channel().type;
 	strcpy_s(name, 256, cname);
 	_exrc->channelIter ++;
 	return 0;
@@ -132,15 +135,26 @@ int exrf_get_layer_next(point64 exrc, char* name)
 void exrf_bind_channel_data(point64 exrc, const char* channel, point64 data_buffer) {
 	auto _exrc = (ExrfContext*)exrc;
 	_exrc->channelMapf[channel] = (float*)data_buffer;
-	_exrc->channelMaph[channel] = new Imf::Array2D<Imath::half>(_exrc->height, _exrc->width);
-	Imf::Array2D<Imath::half>& tbf = *(_exrc->channelMaph[channel]);
-	tbf.resizeErase(_exrc->height, _exrc->width);
 	//Imf::Array2D<Imath::half> tbf = Imf::Array2D<Imath::half>(_exrc->height, _exrc->width);
 	//_exrc->channelMaph[channel] = tbf;
 	//Imf::Array2D<Imath::half> tbf = *_ptbf;
-	_exrc->frameBuffer.insert(channel, Imf::Slice(
-		Imf::HALF, (char*)(&tbf[0][0]), sizeof(tbf[0][0]) * 1, sizeof(tbf[0][0]) * (_exrc->width), 1, 1, 0.0
-	));
+	Imf::PixelType chtype = Imf::FLOAT;
+	if (_exrc->channelMapType.count(channel)){
+		chtype = _exrc->channelMapType.at(channel);
+	}
+	if (chtype == Imf::HALF) {
+		_exrc->channelMaph[channel] = new Imf::Array2D<Imath::half>(_exrc->height, _exrc->width);
+		Imf::Array2D<Imath::half>& tbf = *(_exrc->channelMaph[channel]);
+		tbf.resizeErase(_exrc->height, _exrc->width);
+		_exrc->frameBuffer.insert(channel, Imf::Slice(
+			chtype, (char*)(&tbf[0][0]), sizeof(Imath::half) * 1, sizeof(Imath::half) * (_exrc->width), 1, 1, 0.0
+		));
+	}
+	else if (chtype == Imf::FLOAT) {
+		_exrc->frameBuffer.insert(channel, Imf::Slice(
+			chtype, (char*)(data_buffer), sizeof(float) * 1, sizeof(float) * (_exrc->width), 1, 1, 0.0
+		));
+	}
 }
 
 void exrf_read_pdata(point64 exrc) {
@@ -153,16 +167,17 @@ void exrf_read_pdata(point64 exrc) {
 		auto dbox = _exrc->inputFile->header().dataWindow();
 		_exrc->inputFile->readPixels(dbox.min.y, dbox.max.y);
 	}
-	auto ite = _exrc->channelMaph.begin();
-	for (ite; ite!=_exrc->channelMaph.end(); ite++)
+	auto ite = _exrc->channelMapf.begin();
+	for (ite; ite!=_exrc->channelMapf.end(); ite++)
 	{
-		auto fdp = _exrc->channelMapf[ite->first];
-		auto hdp = (Imath::half*)ite->second[0][0];
-		for (size_t i = 0; i < _exrc->width*_exrc->height; i++)
-		{
-			fdp[i] = hdp[i];
-			if (fdp[i] > 0.0f) 
-			{
+		if (_exrc->channelMapType.count(ite->first)) {
+			if (_exrc->channelMapType.at(ite->first) == Imf::HALF) {
+				auto fdp = ite->second;
+				auto hdp = (Imath::half*)(_exrc->channelMaph[ite->first])[0][0];
+				for (size_t i = 0; i < _exrc->width * _exrc->height; i++)
+				{
+					fdp[i] = hdp[i];
+				}
 			}
 		}
 	}

@@ -172,8 +172,20 @@ namespace EXRviewer
             }
             var ccobj = new TestCC();
             double gamma_bv = Convert.ToDouble(xmld.Document.SelectSingleNode("/root/control/gamma").InnerText);
+            Func<float, float, float, float> clamp_fp = (float _in, float min, float max)=>{ 
+                float v = _in;
+                if (v < min)
+                {
+                    v = min;
+                }
+                if (v > max)
+                {
+                    v = max;
+                }
+                return v; 
+            };
             float gamma_fp(float _in) => Convert.ToSingle(Math.Pow(_in, 1.0 / gamma_bv));
-            byte cmc(float pv) => Convert.ToByte(Math.Max(Math.Min(gamma_fp(pv), 1.0f), 0.0f) * 255.0f);
+            byte cmc(float pv) => Convert.ToByte(clamp_fp(gamma_fp(clamp_fp(pv, 0.0f, 1.0f)), 0.0f, 1.0f) * 255.0f);
             for (int hi = 0; hi < efData.height; hi++)
             {
                 for (int wi = 0; wi < efData.width; wi++)
