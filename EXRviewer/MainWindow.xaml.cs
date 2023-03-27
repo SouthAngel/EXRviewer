@@ -147,6 +147,8 @@ namespace EXRviewer
             {
                 ReadAImage();
             }
+            xmld.Document.SelectSingleNode("/root/control/layerbox/current").InnerText = "";
+            SetDefaultChannelControl("");
             UpdateImageView();
         }
 
@@ -410,7 +412,7 @@ namespace EXRviewer
             var tmp = e.Data.GetData(DataFormats.FileDrop) as System.Array;
             if (tmp.Length < 1) { return; }
             toReadFilePath = tmp.GetValue(0) as string;
-            if (toReadFilePath.EndsWith(".exr"))
+            if (toReadFilePath.ToLower().EndsWith(".exr"))
             {
                 ReadExr();
             } else {

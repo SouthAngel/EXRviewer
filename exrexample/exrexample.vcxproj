@@ -79,6 +79,9 @@
     <LibraryPath>D:\DownLoads\OpenEXR\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
     <IncludePath>D:\DownLoads\OpenEXR\include\Imath;D:\DownLoads\OpenEXR\include\OpenEXR;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>D:\001\Temp\CProjects\NetApplicationStarter\NetApplicationStarter\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
